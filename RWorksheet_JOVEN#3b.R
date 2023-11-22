@@ -28,10 +28,10 @@ data_display <- data.frame(Respondents, Sex,Father_Occupation,PersonsAtHome,
  types_houses 
  
  #g
- selected_data <- data_display %>% select(1,2,3)
- data3 <- selected_data[data_display$Sex == 1,]
-  data3 
-  
+ selected_data <- data_display %>% select(Respondents, Sex, Father_Occupation)
+ data3 <- selected_data[data_display$Sex == 1, ]
+ data3
+ 
   #h
   selected_data2 <- data_display %>% select(1,2,5)
   female <- selected_data2[data_display$SiblingsAtSchool >= 5, ]
