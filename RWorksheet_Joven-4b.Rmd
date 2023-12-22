@@ -1,0 +1,72 @@
+---
+title: "RWorksheet_Joven#4b.Rmd"
+author: "Jowi Lorenz Nyl Joven BSIT 2-B"
+date: "2023-11-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+vectorA <- c(1, 2, 3, 4, 5)
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+matrixA
+for (i in 1:5) {
+for (j in 1:5) {
+matrixA[i, j] <- abs(vectorA[i] - vectorA[j])
+}
+}
+matrixA
+
+rightTriangle <- c()
+for(i in 1:5) {
+for(j in 1:i+1) {
+rightTriangle = c(rightTriangle, "*")
+}
+print(rightTriangle)
+rightTriangle <- c()
+}
+n <- as.integer(readline(prompt = "Enter the number of terms: "))
+a <- 0
+b <- 1
+cat("Fibonacci Sequence:", a, b)
+repeat 
+c <- a + b
+if (c > 500) {
+break
+}
+cat(", ",c)
+a <- b
+b 
+HouseholdData <-read.table("HouseHoldData.csv",header = TRUE, sep = ",", as.is = TRUE)
+View(HouseholdData)
+head(HouseholdData,6)
+male_subset <- subset(HouseholdData, a_gender == 'M')
+female_subset <- subset(HouseholdData, a_gender == 'F')
+male_count <- nrow(male_subset)
+male_count
+female_count <- nrow(female_subset)
+female_count
+count <- c(male_count, female_count)
+count
+gender <- c("Male", "Female")
+
+barplot(count,
+names.arg = gender,
+main = "The number of Males and Females in Household Data",
+xlab = "Gender",
+ylab = "Count",
+
+col = c("blue", "pink"))
+legend("topright",
+legend = gender,
+fill = c("blue", "pink"))
+
+
+
+
+
+```
+
+
+
