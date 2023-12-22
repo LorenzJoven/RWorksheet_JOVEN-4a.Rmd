@@ -1,0 +1,123 @@
+---
+title: "RWorksheet_Joven#4c"
+author: "Jowi Lorenz Nyl Joven BSIT 2-B"
+date: "2023-12-20"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{R}
+library(readr)
+
+#1. Use the dataset car_data instead of mpg
+car_data <- read_csv("/cloud/project/mpg.csv", show_col_types = FALSE)
+spec(car_data)
+head(car_data)
+
+#B. Check the structure of car_data
+str(car_data)
+
+#C. Identify the continuous variables in the car_data
+# The continuous variables are: engine_displacement, manufacturing_year, cylinders, city_mpg, highway_mpg
+```
+
+```{r}
+library(dplyr)
+#2. Explore car manufacturers and models
+manufacturers <- table(car_data$manufacturer)
+models_count <- car_data %>% count(model)
+unique_models <- car_data %>% group_by(manufacturer) %>% distinct(model)
+
+#A. Table of manufacturers
+manufacturers
+#B. Table of car models
+models_count
+#C. Unique models per manufacturer
+unique_models
+```
+
+```{r}
+#3. Plotting: Manufacturer vs. Number of Cars
+library(ggplot2)
+
+# A. Bar plot of car manufacturers
+qplot(manufacturer, data = car_data, geom = "bar", fill = manufacturer)
+
+# B. Scatter plot of car models vs. manufacturers
+ggplot(car_data, aes(model, manufacturer)) + geom_point()
+```
+
+
+```{r}
+#4. Summary statistics of car models
+models_summary <- car_data %>%
+  group_by(model) %>%
+  summarise(num_cars = n())
+
+#A. Bar plot of top 20 car models
+top_20 <- head(car_data, 20)
+ggplot(top_20, aes(x = model)) + geom_bar(fill = "red", alpha = 0.5) +
+  labs(title = "Top 20 Car Models", x = "Car Model", y = "Number of Cars") +
+  theme_minimal()
+
+#B. Horizontal bar plot of top 20 car models
+ggplot(top_20, aes(x = model)) + geom_bar(fill = "yellow", alpha = 0.7) + 
+  labs(title = "Top 20 Car Models", x = "Car Model", y = "Number of Cars") +
+  theme_minimal() + coord_flip()
+```
+
+
+```{r}
+#5. Scatter plot of cylinders vs. engine displacement
+ggplot(car_data, aes(x = cylinders, y = engine_displacement, color = engine_displacement)) +
+  geom_point() +
+  labs(title = "Cylinders vs. Engine Displacement", x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_continuous(name = "Engine Displacement") +
+  theme_minimal()
+```
+
+
+```{r}
+#6. Traffic data analysis
+traffic_data <- read.csv("traffic.csv")
+num_traffic_obs <- nrow(traffic_data)
+junctions_subset <- traffic_data %>% select(DateTime, Junction, Vehicles)
+ggplot(junctions_subset, aes(x = DateTime, y = Vehicles, color = as.factor(Junction), group = Junction)) +
+  geom_line() +
+  labs(title = "Traffic Data by Junctions", x = "DateTime", y = "Number of Vehicles") +
+  theme_minimal()
+```
+
+
+```{r}
+#7. Alexa data analysis
+alexa_file <- read_excel("/cloud/project/alexa_file.xlsx")
+nrow_alexa <- nrow(alexa_file)
+ncol_alexa <- ncol(alexa_file)
+alexa_data <- alexa_file %>% group_by(variation) %>% summarise(Frequency = n())
+
+ggplot(alexa_data, aes(x = variation, y = Frequency)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Variations of Alexa Devices", x = "Variation", y = "Frequency")
+
+summary_reviews <- alexa_file %>% group_by(date) %>% summarize(NumVerifiedReviews = n())
+
+ggplot(summary_reviews, aes(x = date, y = NumVerifiedReviews)) +
+  geom_line(color = "blue") +
+  labs(title = "Verified Reviews Over Time", x = "Date", y = "Number of Verified Reviews") +
+  theme_minimal()
+
+ggplot(alexa_file, aes(x = rating, y = variation)) +
+  geom_point() +
+  labs(title = "Relationship Between Variations and Ratings", x = "Variation", y = "Rating") +
+  theme_minimal()
+```
+
+
+
+
