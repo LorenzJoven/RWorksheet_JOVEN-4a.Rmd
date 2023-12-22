@@ -1,0 +1,95 @@
+---
+title: "RWorksheet_Joven#6"
+author: "Jowi Lorenz Nyl Joven BSIT 2-B"
+date: "2023-12-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+#1
+#install.packages("Hmisc")
+#install.packages("pastecs")
+library(Hmisc)
+library(pastecs)
+
+students <- c(1:10)
+pre_test <- c(55,54,47,57,51,61,57,54,63,58)
+post_test <- c(61,60,56,63,56,63,59,56,62,61)
+
+students_df <- data.frame(students, pre_test, post_test)
+#A
+describe(students_df)
+stat.desc(students_df)
+```
+
+```{r}
+#2
+#A
+fertilizer_level_text <- c("low","medium","high","low","medium","high")
+ordered_fertilizer_text <- factor(fertilizer_level_text, ordered = TRUE, levels = c("low","medium","high"))
+
+fertilizer_level <- c(10,10,10,20,20,50,10,50,20,50,20,10)
+ordered_fertilizer <- factor(fertilizer_level, ordered = TRUE)
+```
+
+```{r}
+#3.
+#3 A factor can be employed to encapsulate the various levels undertaken by 10 subjects..
+#A
+exercise_level <- c("l", "n", "n", "i", "l", "l", "n", "n", "i", "l")
+
+exercise_factor <- factor(exercise_level, levels = c("n", "l", "i"), labels = c("none", "light", "intense"))
+
+print(exercise_factor)
+```
+
+```{r}
+#4.
+states <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa", "qld",
+           "vic", "nsw", "vic", "qld", "qld", "sa", "tas", "sa", "nt",
+           "wa", "vic", "qld", "nsw", "nsw", "wa", "sa", "act", "nsw",
+           "vic", "vic", "act")
+#A. 
+state_factor <- factor(states)
+print(state_factor)
+#The results show the various "Levels" listed in the vector.
+```
+
+```{r}
+#5.
+incomes <- c(60, 49, 40, 61, 64, 60, 59, 54,
+             62, 69, 70, 42, 56, 61, 61, 61, 58, 51, 48,
+             65, 49, 49, 41, 48, 52, 46, 59, 46, 58, 43)
+#A. Sample Mean
+
+income_means <- tapply(incomes, state_factor, mean)
+print(income_means)
+
+#B. The results display the mean for each state given. 
+```
+
+```{r}
+#6.
+#std_error <- function(x) sqrt(var(x)/length(x))
+#inc_ster <- tapply(incomes, statef, std_error)
+
+#A. The standard error occurs because the vector was named 'state,' and the object 'statef' is not found.
+```
+
+```{r}
+#7.
+#install.packages("titanic")
+library(titanic)
+data("titanic_train")
+titanic_data <- titanic_train
+#A
+
+survived <- subset(titanic_data, Survived == 1)
+didnt_survive <- subset(titanic_data, Survived == 0)
+
+print(survived)
+print(didnt_survive)
+```
